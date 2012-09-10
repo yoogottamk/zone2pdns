@@ -1,4 +1,4 @@
 zoneparser
 ==========
 
-Streaming BIND Zone parsering module
+Streaming BIND Zone parsing module

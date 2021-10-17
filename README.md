@@ -10,8 +10,9 @@ You need to make some changes to the zone file in order for this parser to work
 
 1. collapse SOA record into a single line (or remove all comments within the SOA record parenthesis)
 2. add "owner" to all fields
+
 e.g.:
-wouldn't work, parses doesn't handle this right now
+wouldn't work, parser doesn't handle this right now
 ```
 services  A     10.0.1.10
           AAAA  aaaa:bbbb::10

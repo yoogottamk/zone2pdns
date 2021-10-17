@@ -1,0 +1,32 @@
+$ORIGIN example.com.
+$TTL 86400
+@   SOA dns1.example.com. hostmaster.example.com. 2001062501 21600 3600 604800 86400 
+;
+;
+@    NS  dns1.example.com.
+@    NS  dns2.example.com.
+dns1    A   10.0.1.1
+dns1    AAAA    aaaa:bbbb::1
+dns2    A   10.0.1.2
+dns2    AAAA    aaaa:bbbb::2
+;
+;
+@   MX  10  mail.example.com.
+@   MX  20  mail2.example.com.
+mail    A   10.0.1.5
+mail    AAAA    aaaa:bbbb::5
+mail2   A   10.0.1.6
+mail2   AAAA    aaaa:bbbb::6
+;
+;
+; This sample zone file illustrates sharing the same IP addresses for multiple services:
+;
+services    A   10.0.1.10
+services    AAAA    aaaa:bbbb::10
+services    A   10.0.1.11
+services    AAAA    aaaa:bbbb::11
+
+ftp CNAME   services.example.com.
+www CNAME   services.example.com.
+;
+;

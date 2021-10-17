@@ -1,0 +1,304 @@
+[
+    {
+        "name": "dns1.example.com.",
+        "type": "A",
+        "ttl": "86400",
+        "changetype": "REPLACE",
+        "records": [
+            {
+                "content": "10.0.1.1",
+                "disabled": false
+            }
+        ],
+        "comments": [
+            {
+                "content": "",
+                "account": "admin"
+            }
+        ]
+    },
+    {
+        "name": "dns1.example.com.",
+        "type": "AAAA",
+        "ttl": "86400",
+        "changetype": "REPLACE",
+        "records": [
+            {
+                "content": "aaaa:bbbb::1",
+                "disabled": false
+            }
+        ],
+        "comments": [
+            {
+                "content": "",
+                "account": "admin"
+            }
+        ]
+    },
+    {
+        "name": "dns2.example.com.",
+        "type": "A",
+        "ttl": "86400",
+        "changetype": "REPLACE",
+        "records": [
+            {
+                "content": "10.0.1.2",
+                "disabled": false
+            }
+        ],
+        "comments": [
+            {
+                "content": "",
+                "account": "admin"
+            }
+        ]
+    },
+    {
+        "name": "dns2.example.com.",
+        "type": "AAAA",
+        "ttl": "86400",
+        "changetype": "REPLACE",
+        "records": [
+            {
+                "content": "aaaa:bbbb::2",
+                "disabled": false
+            }
+        ],
+        "comments": [
+            {
+                "content": "",
+                "account": "admin"
+            }
+        ]
+    },
+    {
+        "name": "example.com.",
+        "type": "MX",
+        "ttl": "86400",
+        "changetype": "REPLACE",
+        "records": [
+            {
+                "content": "10 mail.example.com.",
+                "disabled": false
+            },
+            {
+                "content": "20 mail2.example.com.",
+                "disabled": false
+            }
+        ],
+        "comments": [
+            {
+                "content": "",
+                "account": "admin"
+            },
+            {
+                "content": "",
+                "account": "admin"
+            }
+        ]
+    },
+    {
+        "name": "example.com.",
+        "type": "NS",
+        "ttl": "86400",
+        "changetype": "REPLACE",
+        "records": [
+            {
+                "content": "dns1.example.com.",
+                "disabled": false
+            },
+            {
+                "content": "dns2.example.com.",
+                "disabled": false
+            }
+        ],
+        "comments": [
+            {
+                "content": "",
+                "account": "admin"
+            },
+            {
+                "content": "",
+                "account": "admin"
+            }
+        ]
+    },
+    {
+        "name": "example.com.",
+        "type": "SOA",
+        "ttl": "86400",
+        "changetype": "REPLACE",
+        "records": [
+            {
+                "content": "dns1.example.com. hostmaster.example.com. 2001062501 21600 3600 604800 86400",
+                "disabled": false
+            }
+        ],
+        "comments": [
+            {
+                "content": "",
+                "account": "admin"
+            }
+        ]
+    },
+    {
+        "name": "ftp.example.com.",
+        "type": "CNAME",
+        "ttl": "86400",
+        "changetype": "REPLACE",
+        "records": [
+            {
+                "content": "services.example.com.",
+                "disabled": false
+            }
+        ],
+        "comments": [
+            {
+                "content": "",
+                "account": "admin"
+            }
+        ]
+    },
+    {
+        "name": "mail.example.com.",
+        "type": "A",
+        "ttl": "86400",
+        "changetype": "REPLACE",
+        "records": [
+            {
+                "content": "10.0.1.5",
+                "disabled": false
+            }
+        ],
+        "comments": [
+            {
+                "content": "",
+                "account": "admin"
+            }
+        ]
+    },
+    {
+        "name": "mail.example.com.",
+        "type": "AAAA",
+        "ttl": "86400",
+        "changetype": "REPLACE",
+        "records": [
+            {
+                "content": "aaaa:bbbb::5",
+                "disabled": false
+            }
+        ],
+        "comments": [
+            {
+                "content": "",
+                "account": "admin"
+            }
+        ]
+    },
+    {
+        "name": "mail2.example.com.",
+        "type": "A",
+        "ttl": "86400",
+        "changetype": "REPLACE",
+        "records": [
+            {
+                "content": "10.0.1.6",
+                "disabled": false
+            }
+        ],
+        "comments": [
+            {
+                "content": "",
+                "account": "admin"
+            }
+        ]
+    },
+    {
+        "name": "mail2.example.com.",
+        "type": "AAAA",
+        "ttl": "86400",
+        "changetype": "REPLACE",
+        "records": [
+            {
+                "content": "aaaa:bbbb::6",
+                "disabled": false
+            }
+        ],
+        "comments": [
+            {
+                "content": "",
+                "account": "admin"
+            }
+        ]
+    },
+    {
+        "name": "services.example.com.",
+        "type": "A",
+        "ttl": "86400",
+        "changetype": "REPLACE",
+        "records": [
+            {
+                "content": "10.0.1.10",
+                "disabled": false
+            },
+            {
+                "content": "10.0.1.11",
+                "disabled": false
+            }
+        ],
+        "comments": [
+            {
+                "content": "",
+                "account": "admin"
+            },
+            {
+                "content": "",
+                "account": "admin"
+            }
+        ]
+    },
+    {
+        "name": "services.example.com.",
+        "type": "AAAA",
+        "ttl": "86400",
+        "changetype": "REPLACE",
+        "records": [
+            {
+                "content": "aaaa:bbbb::10",
+                "disabled": false
+            },
+            {
+                "content": "aaaa:bbbb::11",
+                "disabled": false
+            }
+        ],
+        "comments": [
+            {
+                "content": "",
+                "account": "admin"
+            },
+            {
+                "content": "",
+                "account": "admin"
+            }
+        ]
+    },
+    {
+        "name": "www.example.com.",
+        "type": "CNAME",
+        "ttl": "86400",
+        "changetype": "REPLACE",
+        "records": [
+            {
+                "content": "services.example.com.",
+                "disabled": false
+            }
+        ],
+        "comments": [
+            {
+                "content": "",
+                "account": "admin"
+            }
+        ]
+    }
+]

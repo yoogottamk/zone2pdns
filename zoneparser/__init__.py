@@ -123,6 +123,7 @@ class Tokeniser(object):
         for line in zonefile:
             current_token = None
             escaped_char = False
+            string_token = False
 
             for i, c in enumerate(line):
                 # escape char
@@ -137,6 +138,15 @@ class Tokeniser(object):
                     escaped_char = False
                     continue
 
+                # If string, keep reading this string until ending " is found.
+                # The second condition is redundant, and is made to keep
+                # static analysis happy.
+                if string_token and type(current_token) is DataToken:
+                    current_token.value += c
+                    if c == "\"":
+                        string_token = False
+                    continue
+
                 c_token = self.char_to_token(c)
 
                 if current_token:
@@ -149,6 +159,10 @@ class Tokeniser(object):
                 if type(c_token) is DataToken:
                     if not current_token:
                         current_token = c_token
+                        # If we are creating a new token, and it is a string,
+                        # we set string_token to True
+                        if c == "\"":
+                            string_token = True
                 elif type(c_token) is CommentToken:
                     c_token.value = line[i + 1 :].strip()
                     yield c_token
@@ -209,8 +223,7 @@ class DNSRecord(object):
         self.comment = comment
 
     def __repr__(self):
-        return "%s%s [%s] %s (%s)" % (
-            "-------- " if not self.active else "",
+        return "%s [%s] %s (%s)" % (
             self.domain,
             self.type,
             self.value,
@@ -240,11 +253,12 @@ class ZoneAnalyser(object):
             in "A AAAA AFSDB APL CERT CNAME DHCID DLV DNAME DNSKEY DS HIP IPSECKEY KEY KX LOC MX NAPTR NS NSEC NSEC3 NSEC3PARAM PTR RRSIG RP SIG SOA SPF SRV SSHFP TA TKEY TLSA TSIG TXT".split()
         )
 
-    def analyze(self, token_groups):
+    def analyze(self, token_groups, default_zone):
         """Generator which creates DNSRecord(s) from a tokenized zone file"""
 
         current_ttl = None
-        current_origin = None
+        # Append '.' to zone, to make it an absolute DNS record
+        current_origin = DataToken(default_zone + ".")
         last_domain = None
 
         for group in token_groups:
@@ -363,8 +377,8 @@ class ZoneAnalyser(object):
             )
 
 
-def parse_zonefile(zonefile):
+def parse_zonefile(zonefile, zone):
     token_groups = Tokeniser().tokenise(zonefile)
-    records = ZoneAnalyser().analyze(token_groups)
+    records = ZoneAnalyser().analyze(token_groups, zone)
 
     return records

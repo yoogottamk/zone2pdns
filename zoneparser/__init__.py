@@ -307,7 +307,6 @@ class ZoneAnalyser(object):
             elif group[0] == "@":
                 if current_origin:
                     group[0] = current_origin
-                    last_domain = current_origin
                 else:
                     yield DNSRecordError(group, "No ORIGIN declared for @ usage")
                     continue
@@ -323,6 +322,8 @@ class ZoneAnalyser(object):
             entry_class = "IN"
             entry_type = None
             entry_value = None
+
+            last_domain = group[0]
 
             if group_length <= ttl_pos:
                 yield DNSRecordError(group, "Invalid Record")

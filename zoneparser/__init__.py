@@ -143,7 +143,7 @@ class Tokeniser(object):
                 # static analysis happy.
                 if string_token and type(current_token) is DataToken:
                     current_token.value += c
-                    if c == "\"":
+                    if c == '"':
                         string_token = False
                     continue
 
@@ -161,7 +161,7 @@ class Tokeniser(object):
                         current_token = c_token
                         # If we are creating a new token, and it is a string,
                         # we set string_token to True
-                        if c == "\"":
+                        if c == '"':
                             string_token = True
                 elif type(c_token) is CommentToken:
                     c_token.value = line[i + 1 :].strip()

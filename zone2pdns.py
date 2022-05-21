@@ -169,7 +169,9 @@ def build_pdns_rrsets(zonefile_path: str, zone: str) -> List[dict]:
     """
     active_lines, commented_lines = load_zonefile(zonefile_path)
 
-    rrsets = parse_records(active_lines, zone) + parse_records(commented_lines, zone, active=False)
+    rrsets = parse_records(active_lines, zone) + parse_records(
+        commented_lines, zone, active=False
+    )
     merged_rrsets = merge_records(rrsets)
 
     payload = [rr.to_dict() for rr in merged_rrsets]
@@ -182,11 +184,12 @@ if __name__ == "__main__":
 
     payload = build_pdns_rrsets(zonefile_path, zone)
 
-    prompt_resp = (
-        input(f"Will add {len(payload)} records. Proceed? [y/p(rint)/N] ")
-        .strip()
-        .lower()
+    print(
+        f"Will add {len(payload)} records. Proceed? [y/p(rint)/N] ",
+        end="",
+        file=sys.stderr,
     )
+    prompt_resp = input().strip().lower()
     if prompt_resp == "y":
         r = requests.patch(
             f"http://{PDNS_API_HOST}/api/v1/servers/{PDNS_SERVER}/zones/{zone}.",

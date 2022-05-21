@@ -240,11 +240,11 @@ class ZoneAnalyser(object):
             in "A AAAA AFSDB APL CERT CNAME DHCID DLV DNAME DNSKEY DS HIP IPSECKEY KEY KX LOC MX NAPTR NS NSEC NSEC3 NSEC3PARAM PTR RRSIG RP SIG SOA SPF SRV SSHFP TA TKEY TLSA TSIG TXT".split()
         )
 
-    def analyze(self, token_groups):
+    def analyze(self, token_groups, default_zone):
         """Generator which creates DNSRecord(s) from a tokenized zone file"""
 
         current_ttl = None
-        current_origin = None
+        current_origin = DataToken(default_zone)
         last_domain = None
 
         for group in token_groups:
@@ -363,8 +363,8 @@ class ZoneAnalyser(object):
             )
 
 
-def parse_zonefile(zonefile):
+def parse_zonefile(zonefile, zone):
     token_groups = Tokeniser().tokenise(zonefile)
-    records = ZoneAnalyser().analyze(token_groups)
+    records = ZoneAnalyser().analyze(token_groups, zone)
 
     return records

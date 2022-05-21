@@ -106,13 +106,13 @@ def load_zonefile(zonefile_path: str) -> Tuple[List[str], List[str]]:
     return active_lines, commented_lines
 
 
-def parse_records(zonefile_lines: List[str], active=True):
+def parse_records(zonefile_lines: List[str], zone: str, active=True):
     """
     Use zoneparser to parse lines
     """
     parsed_records = []
 
-    for rec in parse_zonefile(zonefile_lines):
+    for rec in parse_zonefile(zonefile_lines, zone):
         if type(rec) is DNSRecordError:
             print(rec, file=sys.stderr)
         else:
@@ -163,13 +163,13 @@ def merge_records(records: List[PDNSResourceRecord]):
     return merged_rrsets
 
 
-def build_pdns_rrsets(zonefile_path: str) -> List[dict]:
+def build_pdns_rrsets(zonefile_path: str, zone: str) -> List[dict]:
     """
     zone file -> pdns json payload
     """
     active_lines, commented_lines = load_zonefile(zonefile_path)
 
-    rrsets = parse_records(active_lines) + parse_records(commented_lines, active=False)
+    rrsets = parse_records(active_lines, zone) + parse_records(commented_lines, zone, active=False)
     merged_rrsets = merge_records(rrsets)
 
     payload = [rr.to_dict() for rr in merged_rrsets]
@@ -180,7 +180,7 @@ if __name__ == "__main__":
     assert len(sys.argv) == 3, f"Usage: {sys.argv[0]} ZONE path/to/zonefile"
     zone, zonefile_path = sys.argv[1:3]
 
-    payload = build_pdns_rrsets(zonefile_path)
+    payload = build_pdns_rrsets(zonefile_path, zone)
 
     prompt_resp = (
         input(f"Will add {len(payload)} records. Proceed? [y/p(rint)/N] ")

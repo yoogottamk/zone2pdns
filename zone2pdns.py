@@ -98,7 +98,11 @@ def load_zonefile(zonefile_path: str) -> Tuple[List[str], List[str]]:
             active_lines.append(l)
         # for disabled records
         elif l.strip().startswith(";"):
-            commented_lines.append(l.split(";", 1)[1].strip())
+            scrubbed_comment = l.split(";", 1)[1]
+            # Allow atmost 1 space in comments
+            if len(scrubbed_comment) != 0 and scrubbed_comment[0] == " ":
+                scrubbed_comment = scrubbed_comment[1:]
+            commented_lines.append(scrubbed_comment)
         # normal records
         else:
             active_lines.append(l)

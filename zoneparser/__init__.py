@@ -243,7 +243,8 @@ class ZoneAnalyser(object):
         """Generator which creates DNSRecord(s) from a tokenized zone file"""
 
         current_ttl = None
-        current_origin = DataToken(default_zone)
+        # Append '.' to zone, to make it an absolute DNS record
+        current_origin = DataToken(default_zone + ".")
         last_domain = None
 
         for group in token_groups:

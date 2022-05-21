@@ -209,8 +209,7 @@ class DNSRecord(object):
         self.comment = comment
 
     def __repr__(self):
-        return "%s%s [%s] %s (%s)" % (
-            "-------- " if not self.active else "",
+        return "%s [%s] %s (%s)" % (
             self.domain,
             self.type,
             self.value,

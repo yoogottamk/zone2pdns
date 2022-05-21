@@ -260,6 +260,7 @@ class ZoneAnalyser(object):
         # Append '.' to zone, to make it an absolute DNS record
         current_origin = DataToken(default_zone + ".")
         last_domain = None
+        last_ttl = None
 
         for group in token_groups:
             if isinstance(group[-1], CommentToken):
@@ -295,8 +296,10 @@ class ZoneAnalyser(object):
 
                 continue
 
+            using_optional_name = False
             # Replace some empty fields so long
             if isinstance(group[0], SpaceToken):
+                using_optional_name = True
                 if last_domain:
                     group[0] = last_domain
                 else:
@@ -318,12 +321,10 @@ class ZoneAnalyser(object):
             rdata_pos = 4
 
             entry_owner = group[0].value
-            entry_ttl = current_ttl
+            entry_ttl = last_ttl if (using_optional_name and last_ttl) else current_ttl
             entry_class = "IN"
             entry_type = None
             entry_value = None
-
-            last_domain = group[0]
 
             if group_length <= ttl_pos:
                 yield DNSRecordError(group, "Invalid Record")
@@ -372,6 +373,9 @@ class ZoneAnalyser(object):
 
             if (entry_type == "MX" or entry_type == "CNAME") and entry_value[-1] != ".":
                 entry_value += f".{current_origin.value}"
+
+            last_domain = DataToken(entry_owner)
+            last_ttl = entry_ttl
 
             yield DNSRecord(
                 entry_owner, entry_type, entry_value, entry_ttl, entry_class, comment
